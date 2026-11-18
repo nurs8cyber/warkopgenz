@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Kasir (POS) — WARKOP GEN Z</title>
+  <link rel="icon" href="images/logo.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            wgz: {
+              black: '#0b0908',
+              surface: '#16110e',
+              card: '#1f1712',
+              coffee: '#3b2314',
+              cream: '#f5eadc',
+              muted: '#c8b6a2',
+              orange: '#f97316',
+              orangeDark: '#ea580c'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-wgz-black text-wgz-cream antialiased min-h-screen flex flex-col">
+
+  <!-- TOP HEADER KASIR -->
+  <header class="bg-wgz-surface border-b border-wgz-cream/10 px-4 sm:px-6 h-16 flex items-center justify-between sticky top-0 z-30">
+    <div class="flex items-center gap-3">
+      <img src="images/logo.png" alt="Logo Warkop Gen Z" class="w-10 h-10 rounded-full border-2 border-wgz-orange" />
+      <div>
+        <span class="font-display font-extrabold text-lg text-wgz-cream">WARKOP <span class="text-wgz-orange">GEN Z</span></span>
+        <span class="ml-2 text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">POS KASIR</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button type="button" onclick="switchKasirView('pos')" id="btnViewPos" class="px-3.5 py-1.5 rounded-xl bg-wgz-orange text-white text-xs font-bold">Menu & Transaksi</button>
+      <button type="button" onclick="switchKasirView('history')" id="btnViewHistory" class="px-3.5 py-1.5 rounded-xl bg-wgz-cream/10 text-wgz-cream text-xs font-semibold hover:bg-wgz-cream/20">Riwayat Transaksi</button>
+      <span id="kasirUserBadge" class="hidden md:inline-block text-xs text-wgz-muted px-3 py-1.5 bg-wgz-black rounded-full border border-wgz-cream/10">Kasir</span>
+      <button type="button" id="kasirLogoutBtn" class="px-3.5 py-1.5 rounded-xl bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white text-xs font-bold transition-colors">Logout</button>
+    </div>
+  </header>
+
+  <!-- VIEW 1: POINT OF SALE (POS) -->
+  <main id="kasirPosView" class="flex-1 max-w-[1440px] w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- LEFT: PRODUCT CATALOG -->
+    <div class="lg:col-span-8 space-y-5">
+      <!-- Search & Filter Bar -->
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-4 space-y-3">
+        <div class="flex flex-col sm:flex-row gap-3 justify-between">
+          <input id="kasirSearchInput" type="text" placeholder="Cari nama produk..." class="flex-1 bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-2.5 text-sm text-wgz-cream focus:outline-none focus:border-wgz-orange" />
+          <div class="flex items-center gap-2 text-xs bg-wgz-black/70 px-3.5 py-2 rounded-xl border border-wgz-cream/10">
+            <span>📶 WiFi:</span>
+            <strong id="kasirWifiSsid" class="text-wgz-cream">WarkopGenZ_FreeWiFi</strong>
+            <span class="text-wgz-muted">|</span>
+            <strong id="kasirWifiPass" class="text-wgz-orange">Ngopi123</strong>
+          </div>
+        </div>
+        <div id="kasirCategoryTabs" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="kasirProductGrid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+    </div>
+
+    <!-- RIGHT: CART & PAYMENT CHECKOUT -->
+    <div class="lg:col-span-4">
+      <div class="bg-wgz-surface border border-wgz-orange/30 rounded-3xl p-5 sticky top-20 flex flex-col justify-between shadow-2xl">
+        <div>
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-wgz-cream/10">
+            <h2 class="font-display font-extrabold text-lg text-wgz-cream flex items-center gap-2">
+              <span>🛒</span><span>Keranjang Pesanan</span>
+            </h2>
+            <button type="button" onclick="clearCart()" class="text-xs text-red-400 hover:underline">Kosongkan</button>
+          </div>
+
+          <!-- Cart Items -->
+          <div id="kasirCartItems" class="space-y-2.5 max-h-72 overflow-y-auto pr-1">
+            <p class="text-xs text-wgz-muted text-center py-8">Belum ada item di keranjang.</p>
+          </div>
+        </div>
+
+        <!-- Totals & Payment -->
+        <div class="mt-5 pt-4 border-t border-wgz-cream/10 space-y-3">
+          <div class="flex justify-between text-xs text-wgz-muted">
+            <span>Subtotal</span>
+            <span id="cartSubtotal" class="font-semibold text-wgz-cream">Rp0</span>
+          </div>
+          <div class="flex justify-between text-base font-extrabold text-wgz-cream">
+            <span>Total Pembayaran</span>
+            <span id="cartTotal" class="text-wgz-orange text-xl">Rp0</span>
+          </div>
+
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Uang Pembayaran Diterima (Rp)</label>
+            <input id="cashPaidInput" type="number" min="0" step="500" placeholder="Masukkan nominal uang..." class="w-full bg-wgz-black border border-wgz-cream/20 rounded-xl px-4 py-2.5 text-base font-bold text-wgz-cream focus:outline-none focus:border-wgz-orange" />
+            <div class="flex gap-1.5 mt-2">
+              <button type="button" onclick="setQuickCash('exact')" class="flex-1 py-1.5 rounded-lg bg-wgz-cream/10 hover:bg-wgz-cream/20 text-[11px] font-bold">Uang Pas</button>
+              <button type="button" onclick="setQuickCash(20000)" class="flex-1 py-1.5 rounded-lg bg-wgz-cream/10 hover:bg-wgz-cream/20 text-[11px] font-bold">20rb</button>
+              <button type="button" onclick="setQuickCash(50000)" class="flex-1 py-1.5 rounded-lg bg-wgz-cream/10 hover:bg-wgz-cream/20 text-[11px] font-bold">50rb</button>
+              <button type="button" onclick="setQuickCash(100000)" class="flex-1 py-1.5 rounded-lg bg-wgz-cream/10 hover:bg-wgz-cream/20 text-[11px] font-bold">100rb</button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center p-3 rounded-xl bg-wgz-black/70 border border-wgz-cream/10">
+            <span class="text-xs text-wgz-muted">Uang Kembalian</span>
+            <span id="cartChange" class="font-display font-extrabold text-lg text-emerald-400">Rp0</span>
+          </div>
+
+          <button type="button" id="processTrxBtn" onclick="processTransaction()" class="w-full bg-wgz-orange hover:bg-wgz-orangeDark text-white font-extrabold py-3.5 rounded-2xl shadow-lg shadow-wgz-orange/30 transition-all text-sm tracking-wide">
+            ✓ PROSES TRANSAKSI
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- VIEW 2: RIWAYAT TRANSAKSI KASIR -->
+  <section id="kasirHistoryView" class="hidden max-w-6xl w-full mx-auto p-4 sm:p-6">
+    <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5 overflow-x-auto">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-display font-extrabold text-xl text-wgz-cream">🧾 Riwayat Transaksi</h2>
+        <button type="button" onclick="switchKasirView('pos')" class="text-xs text-wgz-orange hover:underline">← Kembali ke Kasir</button>
+      </div>
+      <table class="w-full text-left text-sm">
+        <thead>
+          <tr class="border-b border-wgz-cream/10 text-xs text-wgz-muted">
+            <th class="py-3 px-2">ID Struk</th>
+            <th class="py-3 px-2">Waktu</th>
+            <th class="py-3 px-2">Pesanan</th>
+            <th class="py-3 px-2">Total</th>
+            <th class="py-3 px-2 text-right">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="kasirHistoryTableBody" class="divide-y divide-wgz-cream/5"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MODAL STRUK PEMBAYARAN -->
+  <div id="receiptModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white text-black rounded-2xl max-w-sm w-full p-6 shadow-2xl">
+      <div id="receiptPrintArea" class="font-mono text-xs space-y-2">
+        <div class="text-center border-b border-dashed border-black pb-3">
+          <div class="font-extrabold text-base tracking-wide">WARUNG KOPI GEN Z</div>
+          <div class="text-[11px]">Jl. Kemandoran No.119, Pekayon Jaya, Bekasi Selatan</div>
+          <div class="text-[11px]">WA: 089518000755</div>
+        </div>
+        <div class="flex justify-between text-[11px]">
+          <span id="recId">TRX-001</span>
+          <span id="recDate">18/11/2026</span>
+        </div>
+        <div class="text-[11px] border-b border-dashed border-black pb-2">
+          Kasir: <span id="recCashier">Kasir</span>
+        </div>
+        <div id="recItemsList" class="space-y-1.5 py-2 border-b border-dashed border-black"></div>
+        <div class="space-y-1 pt-1">
+          <div class="flex justify-between font-bold text-sm">
+            <span>Total pembayaran</span>
+            <span id="recTotal">Rp0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Uang diterima</span>
+            <span id="recPaid">Rp0</span>
+          </div>
+          <div class="flex justify-between font-bold">
+            <span>Uang kembalian</span>
+            <span id="recChange">Rp0</span>
+          </div>
+        </div>
+        <div class="text-center pt-3 border-t border-dashed border-black font-bold">
+          Terima kasih telah berkunjung!
+        </div>
+      </div>
+
+      <div class="mt-5 flex gap-2">
+        <button type="button" onclick="window.print()" class="flex-1 bg-black text-white font-bold py-2.5 rounded-xl text-xs hover:bg-neutral-800">🖨️ Cetak Struk</button>
+        <button type="button" onclick="closeReceiptModal()" class="flex-1 bg-orange-500 text-white font-bold py-2.5 rounded-xl text-xs hover:bg-orange-600">Selesai</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/data-store.js"></script>
+  <script src="js/kasir.js"></script>
+</body>
+</html>

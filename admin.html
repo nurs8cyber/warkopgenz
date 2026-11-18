@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin — WARKOP GEN Z</title>
+  <link rel="icon" href="images/logo.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            wgz: {
+              black: '#0b0908',
+              surface: '#16110e',
+              card: '#1f1712',
+              coffee: '#3b2314',
+              cream: '#f5eadc',
+              muted: '#c8b6a2',
+              orange: '#f97316',
+              orangeDark: '#ea580c'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-wgz-black text-wgz-cream antialiased min-h-screen flex flex-col lg:flex-row">
+
+  <!-- MOBILE TOP HEADER -->
+  <div class="lg:hidden bg-wgz-surface border-b border-wgz-cream/10 px-4 py-3 flex items-center justify-between sticky top-0 z-30">
+    <div class="flex items-center gap-2.5">
+      <img src="images/logo.png" alt="Logo" class="w-9 h-9 rounded-full border border-wgz-orange" />
+      <span class="font-display font-extrabold text-base text-wgz-cream">ADMIN <span class="text-wgz-orange">GEN Z</span></span>
+    </div>
+    <button type="button" id="adminMobileMenuBtn" class="px-3 py-1.5 rounded-lg bg-wgz-orange text-white text-xs font-bold">Menu</button>
+  </div>
+
+  <!-- SIDEBAR (11 MENU SESUAI SPESIFIKASI) -->
+  <aside id="adminSidebar" class="hidden lg:flex flex-col w-full lg:w-72 bg-wgz-surface border-r border-wgz-cream/10 p-4 justify-between flex-shrink-0">
+    <div>
+      <a href="index.html" class="flex items-center gap-3 px-2 py-3 mb-4 border-b border-wgz-cream/10">
+        <img src="images/logo.png" alt="Logo Warkop Gen Z" class="w-11 h-11 rounded-full border-2 border-wgz-orange" />
+        <div>
+          <div class="font-display font-extrabold text-lg text-wgz-cream leading-none">WARKOP <span class="text-wgz-orange">GEN Z</span></div>
+          <div class="text-[11px] text-wgz-muted mt-1">Panel Kontrol Admin</div>
+        </div>
+      </a>
+
+      <nav class="space-y-1 text-sm" id="adminNavMenu">
+        <button type="button" data-tab="dashboard" class="sidebar-btn active w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>📊</span><span>1. Dashboard</span>
+        </button>
+        <button type="button" data-tab="produk" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>☕</span><span>2. Kelola Produk</span>
+        </button>
+        <button type="button" data-tab="kategori" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>🗂️</span><span>3. Kategori Produk</span>
+        </button>
+        <button type="button" data-tab="iklan" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>🎬</span><span>4. Kelola Video Iklan</span>
+        </button>
+        <button type="button" data-tab="quotes" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>💬</span><span>5. Kata-Kata Mutiara</span>
+        </button>
+        <button type="button" data-tab="wifi" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>📶</span><span>6. Pengaturan WiFi</span>
+        </button>
+        <button type="button" data-tab="transaksi" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>🧾</span><span>7. Data Transaksi</span>
+        </button>
+        <button type="button" data-tab="laporan" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>📈</span><span>8. Laporan Penjualan</span>
+        </button>
+        <button type="button" data-tab="kasir" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>👥</span><span>9. Manajemen Kasir</span>
+        </button>
+        <button type="button" data-tab="pengaturan" class="sidebar-btn w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-wgz-cream/85 hover:bg-wgz-cream/5 transition-all">
+          <span>⚙️</span><span>10. Pengaturan Website</span>
+        </button>
+        <button type="button" id="adminLogoutBtn" class="w-full text-left px-3.5 py-2.5 rounded-xl flex items-center gap-3 text-red-400 hover:bg-red-500/15 transition-all mt-2">
+          <span>🚪</span><span>11. Logout</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="mt-6 pt-4 border-t border-wgz-cream/10 text-xs text-wgz-muted space-y-2">
+      <a href="index.html" class="block w-full text-center py-2 rounded-xl bg-wgz-cream/10 hover:bg-wgz-cream/20 text-wgz-cream font-semibold">← Lihat Halaman Utama</a>
+      <a href="kasir.html" class="block w-full text-center py-2 rounded-xl bg-wgz-coffee hover:bg-wgz-orange text-wgz-cream hover:text-white font-semibold transition-colors">Buka POS Kasir →</a>
+    </div>
+  </aside>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+    <!-- Top Header -->
+    <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-wgz-cream/10">
+      <div>
+        <h1 id="adminSectionTitle" class="font-display font-extrabold text-2xl sm:text-3xl text-wgz-cream">Dashboard Admin</h1>
+        <p id="adminModeIndicator" class="text-xs text-wgz-muted mt-1">Ringkasan operasional Warkop Gen Z</p>
+      </div>
+      <div class="flex items-center gap-3 bg-wgz-surface px-4 py-2 rounded-full border border-wgz-cream/10">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+        <span id="adminUserBadge" class="text-xs font-bold text-wgz-cream">Admin Utama</span>
+      </div>
+    </div>
+
+    <!-- TAB 1: DASHBOARD RINGKASAN -->
+    <section id="tab-dashboard" class="admin-tab space-y-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <div class="text-xs text-wgz-muted">Total Produk</div>
+          <div id="statTotalProduk" class="font-display font-extrabold text-3xl text-wgz-orange mt-1">0</div>
+          <div class="text-[11px] text-wgz-muted mt-1">Menu aktif di katalog</div>
+        </div>
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <div class="text-xs text-wgz-muted">Total Transaksi</div>
+          <div id="statTotalTransaksi" class="font-display font-extrabold text-3xl text-emerald-400 mt-1">0</div>
+          <div class="text-[11px] text-wgz-muted mt-1">Order berhasil diproses</div>
+        </div>
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <div class="text-xs text-wgz-muted">Total Pendapatan</div>
+          <div id="statTotalPendapatan" class="font-display font-extrabold text-2xl sm:text-3xl text-wgz-cream mt-1">Rp0</div>
+          <div class="text-[11px] text-wgz-muted mt-1">Akumulasi omzet penjualan</div>
+        </div>
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <div class="text-xs text-wgz-muted">Produk Terlaris</div>
+          <div id="statProdukTerlaris" class="font-bold text-lg text-wgz-orange mt-1 truncate">-</div>
+          <div id="statProdukTerlarisQty" class="text-[11px] text-wgz-muted mt-1">0 terjual</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Top Products -->
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <h3 class="font-bold text-base text-wgz-cream mb-4">🔥 Peringkat Produk Terlaris</h3>
+          <div id="dashboardTopProducts" class="space-y-3"></div>
+        </div>
+
+        <!-- Latest Transactions -->
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-base text-wgz-cream">🧾 Transaksi Terbaru</h3>
+            <button type="button" onclick="switchAdminTab('transaksi')" class="text-xs text-wgz-orange hover:underline">Lihat Semua →</button>
+          </div>
+          <div id="dashboardRecentTrx" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- Quick Video Ad Status Card -->
+      <div class="bg-wgz-surface border border-wgz-orange/30 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs uppercase font-bold text-wgz-orange">Video Iklan Aktif di Halaman Utama</span>
+          <h4 id="dashboardActiveAdTitle" class="font-bold text-lg text-wgz-cream mt-0.5">-</h4>
+          <p id="dashboardActiveAdUrl" class="text-xs text-wgz-muted truncate max-w-xl">-</p>
+        </div>
+        <button type="button" onclick="switchAdminTab('iklan')" class="bg-wgz-orange hover:bg-wgz-orangeDark text-white text-xs font-bold px-4 py-2.5 rounded-xl">
+          Ubah Video Iklan
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 2: KELOLA PRODUK (CRUD) -->
+    <section id="tab-produk" class="admin-tab hidden space-y-6">
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+        <h3 id="productFormHeading" class="font-bold text-base text-wgz-orange mb-4">+ Tambah / Edit Produk Menu</h3>
+        <form id="adminProductForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <input type="hidden" id="prodId" />
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Nama Produk *</label>
+            <input id="prodName" type="text" required placeholder="Contoh: Kopi Susu Gula Aren" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Kategori *</label>
+            <select id="prodCategory" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream"></select>
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Harga (Rp) *</label>
+            <input id="prodPrice" type="number" min="0" step="500" required placeholder="10000" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Path / URL Gambar Produk *</label>
+            <input id="prodImage" type="text" required placeholder="images/kopi-gula-aren.jpg" value="images/kopi-hitam.jpg" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs text-wgz-muted mb-1">Deskripsi Singkat</label>
+            <input id="prodDesc" type="text" placeholder="Deskripsi cita rasa produk..." class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div class="lg:col-span-3 flex flex-wrap gap-3">
+            <button type="submit" class="bg-wgz-orange hover:bg-wgz-orangeDark text-white font-bold text-xs px-5 py-2.5 rounded-xl">Simpan Produk</button>
+            <button type="button" onclick="resetProductForm()" class="bg-wgz-cream/10 hover:bg-wgz-cream/20 text-wgz-cream text-xs font-semibold px-4 py-2.5 rounded-xl">Reset Form</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5 overflow-x-auto">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <h3 class="font-bold text-base text-wgz-cream">Daftar Semua Produk</h3>
+          <input id="adminProductSearch" type="text" placeholder="Cari produk..." class="bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2 text-xs text-wgz-cream w-64" />
+        </div>
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-wgz-cream/10 text-xs text-wgz-muted">
+              <th class="py-3 px-2">Foto</th>
+              <th class="py-3 px-2">Nama Produk</th>
+              <th class="py-3 px-2">Kategori</th>
+              <th class="py-3 px-2">Harga</th>
+              <th class="py-3 px-2 text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="adminProductTableBody" class="divide-y divide-wgz-cream/5"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: KATEGORI PRODUK -->
+    <section id="tab-kategori" class="admin-tab hidden space-y-6">
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+        <h3 class="font-bold text-base text-wgz-orange mb-4">+ Tambah / Edit Kategori Produk</h3>
+        <form id="adminCategoryForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <input type="hidden" id="catId" />
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Nama Kategori *</label>
+            <input id="catName" type="text" required placeholder="Contoh: Camilan Malam" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Icon Emoji</label>
+            <input id="catIcon" type="text" placeholder="🍟" value="☕" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Deskripsi</label>
+            <input id="catDesc" type="text" placeholder="Keterangan kategori..." class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div class="md:col-span-3 flex gap-3">
+            <button type="submit" class="bg-wgz-orange hover:bg-wgz-orangeDark text-white font-bold text-xs px-5 py-2.5 rounded-xl">Simpan Kategori</button>
+            <button type="button" onclick="resetCategoryForm()" class="bg-wgz-cream/10 text-wgz-cream text-xs px-4 py-2.5 rounded-xl">Batal</button>
+          </div>
+        </form>
+      </div>
+      <div id="adminCategoryList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- TAB 4: KELOLA VIDEO IKLAN -->
+    <section id="tab-iklan" class="admin-tab hidden space-y-6">
+      <div class="bg-wgz-surface border border-wgz-orange/30 rounded-2xl p-5">
+        <h3 class="font-bold text-base text-wgz-orange mb-1">🎬 Pengelolaan Video Iklan Halaman Utama</h3>
+        <p class="text-xs text-wgz-muted mb-4">Mendukung tautan YouTube (watch, shorts, youtu.be) maupun file video langsung (.mp4). Video yang diaktifkan otomatis tampil di halaman utama pengunjung.</p>
+        <form id="adminAdForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="hidden" id="adId" />
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Judul Video Iklan *</label>
+            <input id="adTitle" type="text" required placeholder="Contoh: Promo Kopi Susu Gula Aren Rp10.000!" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">URL Video (YouTube atau .MP4) *</label>
+            <input id="adUrl" type="url" required placeholder="https://www.youtube.com/watch?v=..." class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div class="md:col-span-2 flex items-center justify-between flex-wrap gap-3">
+            <label class="inline-flex items-center gap-2 text-xs text-wgz-cream cursor-pointer">
+              <input id="adActive" type="checkbox" checked class="accent-orange-500 w-4 h-4" />
+              <span>Aktifkan langsung di Halaman Utama pengunjung</span>
+            </label>
+            <div class="flex gap-2">
+              <button type="submit" class="bg-wgz-orange hover:bg-wgz-orangeDark text-white font-bold text-xs px-5 py-2.5 rounded-xl">Simpan Video Iklan</button>
+              <button type="button" onclick="resetAdForm()" class="bg-wgz-cream/10 text-wgz-cream text-xs px-4 py-2.5 rounded-xl">Reset</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div id="adminAdsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </section>
+
+    <!-- TAB 5: KATA-KATA MUTIARA -->
+    <section id="tab-quotes" class="admin-tab hidden space-y-6">
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+        <h3 class="font-bold text-base text-wgz-orange mb-4">💬 Kelola Kata-Kata Mutiara (Quotes Halaman Utama)</h3>
+        <form id="adminQuoteForm" class="space-y-4">
+          <input type="hidden" id="quoteId" />
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Teks Kata-Kata Mutiara *</label>
+            <textarea id="quoteText" rows="2" required placeholder="Contoh: Kopi boleh pahit, tetapi hidup jangan kehilangan semangat." class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream"></textarea>
+          </div>
+          <div class="flex gap-3">
+            <button type="submit" class="bg-wgz-orange hover:bg-wgz-orangeDark text-white font-bold text-xs px-5 py-2.5 rounded-xl">Simpan Quote</button>
+            <button type="button" onclick="resetQuoteForm()" class="bg-wgz-cream/10 text-wgz-cream text-xs px-4 py-2.5 rounded-xl">Batal</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="adminQuotesList" class="space-y-3"></div>
+    </section>
+
+    <!-- TAB 6: PENGATURAN WIFI -->
+    <section id="tab-wifi" class="admin-tab hidden">
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-6 max-w-2xl">
+        <h3 class="font-bold text-lg text-wgz-orange mb-1">📶 Pengaturan Free WiFi Pelanggan</h3>
+        <p class="text-xs text-wgz-muted mb-5">Nama jaringan dan password WiFi akan langsung diperbarui di halaman utama pengunjung maupun dashboard kasir.</p>
+        <form id="adminWifiForm" class="space-y-4">
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Nama Jaringan WiFi (SSID)</label>
+            <input id="wifiSsidInput" type="text" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-3 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Password WiFi</label>
+            <input id="wifiPassInput" type="text" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-3 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Keterangan Kecepatan</label>
+            <input id="wifiSpeedInput" type="text" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-3 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Catatan Tambahan</label>
+            <input id="wifiNoteInput" type="text" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-3 text-sm text-wgz-cream" />
+          </div>
+          <button type="submit" class="bg-wgz-orange hover:bg-wgz-orangeDark text-white font-bold text-xs px-6 py-3 rounded-xl">Simpan Pengaturan WiFi</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 7: DATA TRANSAKSI -->
+    <section id="tab-transaksi" class="admin-tab hidden space-y-4">
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5 overflow-x-auto">
+        <h3 class="font-bold text-base text-wgz-cream mb-4">🧾 Riwayat Seluruh Transaksi</h3>
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-wgz-cream/10 text-xs text-wgz-muted">
+              <th class="py-3 px-2">ID Transaksi</th>
+              <th class="py-3 px-2">Waktu</th>
+              <th class="py-3 px-2">Kasir</th>
+              <th class="py-3 px-2">Item Pesanan</th>
+              <th class="py-3 px-2">Total</th>
+              <th class="py-3 px-2">Bayar / Kembali</th>
+            </tr>
+          </thead>
+          <tbody id="adminTrxTableBody" class="divide-y divide-wgz-cream/5"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 8: LAPORAN PENJUALAN -->
+    <section id="tab-laporan" class="admin-tab hidden space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <div class="text-xs text-wgz-muted">Total Item Terjual</div>
+          <div id="repTotalItems" class="font-display font-extrabold text-3xl text-wgz-orange mt-1">0</div>
+        </div>
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <div class="text-xs text-wgz-muted">Rata-Rata Nilai Transaksi</div>
+          <div id="repAvgTrx" class="font-display font-extrabold text-3xl text-wgz-cream mt-1">Rp0</div>
+        </div>
+        <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+          <div class="text-xs text-wgz-muted">Total Pendapatan Kotor</div>
+          <div id="repTotalRev" class="font-display font-extrabold text-3xl text-emerald-400 mt-1">Rp0</div>
+        </div>
+      </div>
+
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-base text-wgz-cream">Rekapitulasi Penjualan per Produk</h3>
+          <button type="button" onclick="exportSalesCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-xl">Export CSV</button>
+        </div>
+        <div id="salesReportBreakdown" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- TAB 9: MANAJEMEN KASIR & AKUN -->
+    <section id="tab-kasir" class="admin-tab hidden space-y-6">
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-5 max-w-3xl">
+        <h3 class="font-bold text-base text-wgz-orange mb-1">👥 Manajemen Akun Admin & Kasir</h3>
+        <p class="text-xs text-wgz-muted mb-4">Ubah sandi bawaan (<code>admin:123</code> / <code>kasir:123</code>) atau tambah akun kasir baru untuk operasional lokal.</p>
+        <form id="adminUserForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <input type="hidden" id="userEditId" />
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Nama Lengkap *</label>
+            <input id="userFullName" type="text" required placeholder="Contoh: Kasir Malam" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Username *</label>
+            <input id="userUsername" type="text" required placeholder="kasir2" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Sandi Baru *</label>
+            <input id="userPassword" type="text" required placeholder="123" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Peran (Role) *</label>
+            <select id="userRole" class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-3.5 py-2.5 text-sm text-wgz-cream">
+              <option value="kasir">Kasir</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2 flex gap-3">
+            <button type="submit" class="bg-wgz-orange hover:bg-wgz-orangeDark text-white font-bold text-xs px-5 py-2.5 rounded-xl">Simpan Akun</button>
+            <button type="button" onclick="resetUserForm()" class="bg-wgz-cream/10 text-wgz-cream text-xs px-4 py-2.5 rounded-xl">Reset</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="adminUsersList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- TAB 10: PENGATURAN WEBSITE -->
+    <section id="tab-pengaturan" class="admin-tab hidden space-y-6">
+      <div class="bg-wgz-surface border border-wgz-cream/10 rounded-2xl p-6 max-w-3xl">
+        <h3 class="font-bold text-lg text-wgz-orange mb-4">⚙️ Pengaturan Identitas Website</h3>
+        <form id="adminSiteSettingsForm" class="space-y-4">
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Judul Utama Hero</label>
+            <input id="setSiteTitle" type="text" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Tagline Utama</label>
+            <input id="setTagline" type="text" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Jam Operasional</label>
+            <input id="setOpenHours" type="text" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-2.5 text-sm text-wgz-cream" />
+          </div>
+          <div>
+            <label class="block text-xs text-wgz-muted mb-1">Alamat Lengkap</label>
+            <textarea id="setAddress" rows="2" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-2.5 text-sm text-wgz-cream"></textarea>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-wgz-muted mb-1">Nomor WhatsApp</label>
+              <input id="setWhatsapp" type="text" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-2.5 text-sm text-wgz-cream" />
+            </div>
+            <div>
+              <label class="block text-xs text-wgz-muted mb-1">Link WhatsApp (wa.me)</label>
+              <input id="setWaLink" type="url" required class="w-full bg-wgz-black border border-wgz-cream/15 rounded-xl px-4 py-2.5 text-sm text-wgz-cream" />
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button type="submit" class="bg-wgz-orange hover:bg-wgz-orangeDark text-white font-bold text-xs px-6 py-3 rounded-xl">Simpan Pengaturan Website</button>
+            <button type="button" onclick="handleResetDemo()" class="bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 text-xs font-semibold px-4 py-3 rounded-xl">Reset Data Demo ke Default</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/data-store.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
